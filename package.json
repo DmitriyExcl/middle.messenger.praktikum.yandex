@@ -6,10 +6,10 @@
     "node": ">12.0.0"
   },
   "scripts": {
-    "start": "parcel src/pages/auth/*.hbs --no-cache",
+    "parcel-start": "parcel src/pages/auth/*.hbs --no-cache",
     "prebuild": "engine-version",
     "build": "parcel build src/pages/auth/*.hbs --no-cache --public-url ./",
-    "server": "node appServer.js"
+    "start": "node appServer.js"
   },
   "author": "",
   "license": "ISC",
