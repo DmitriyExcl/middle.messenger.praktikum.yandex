@@ -5,7 +5,11 @@
 1- npm install || yarn
 2- npm start || yarn start
 
-Раздача статики - npm run server
+
+
+ссылка на пр https://github.com/DmitriyExcl/middle.messenger.praktikum.yandex/pull/1
+
+
 
 Ссылка на дизайн - 
 ![Дизайн](https://www.figma.com/file/eJP7qMPoWMiwXN8XkvOndK/Sign-Up-Form-(Community)?node-id=3%3A2)
