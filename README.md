@@ -10,7 +10,7 @@
 Ссылка на дизайн - 
 ![Дизайн](https://www.figma.com/file/eJP7qMPoWMiwXN8XkvOndK/Sign-Up-Form-(Community)?node-id=3%3A2)
 
-ссылка на пр https://github.com/DmitriyExcl/middle.messenger.praktikum.yandex/pull/1
+ссылка на пр https://github.com/DmitriyExcl/middle.messenger.praktikum.yandex/pull/2
 
 
 
