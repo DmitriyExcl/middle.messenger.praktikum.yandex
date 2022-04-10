@@ -1,0 +1,31 @@
+{{!< main}}
+<link rel="stylesheet" href="../../pages/auth/style.scss">
+<div class="auth__block">
+<main class="authorizatons">
+  <h3 class="authorizatons__header">Авторизация</h3>
+  <form class="authorizatons__form">
+      <input
+        type="text"
+        class="authorizatons__form_input"
+        placeholder="логин"
+        id="login"
+        form="auth"
+        required
+        minlength="4"
+      />
+      <input
+        type="password"
+        class="authorizatons__form_input"
+        placeholder="пароль"
+        id="password"
+        form="auth"
+        required
+        minlength="8"
+      />
+      <div class="authorizatons__button-wrapper">
+      {{> button link="../chat/chat.hbs" text="Войти"}}
+      {{> button link="../registrations/registrations.hbs" text="Создать аккаунт"}}
+    </div>
+  </form>
+</main>
+</div>
