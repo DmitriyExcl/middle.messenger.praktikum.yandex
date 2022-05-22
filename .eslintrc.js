@@ -15,5 +15,9 @@ module.exports = {
     '@typescript-eslint',
   ],
   rules: {
-  },
+    "no-unused-vars": 2,
+    "max-len": [1, 100],
+    "max-params": [2, 3]
+  }
+
 };
