@@ -16,19 +16,22 @@ interface InputProps {
 
 // eslint-disable-next-line import/prefer-default-export
 export class Input extends Block {
- public static  componentName = 'Input';
-  constructor({
-    onChange = () => { }, onFocus = () => { }, onBlur = () => { }, type = 'text', error, placeholder, value,
-  }: InputProps) {
+  public static componentName = 'Input';
+
+  constructor(
+    props: InputProps,
+  ) {
     super({
-      type, placeholder, value, error, events: { input: onChange, focus: onFocus, onblur: onBlur },
+      ...props,
+      events: { input: props.onChange, focusout: props.onBlur, focusin: props.onFocus },
     });
   }
 
   protected render(): string {
     return `
       <div>
-        <input class="main_input" type="{{type}}" placeholder="{{placeholder}}" value="{{value}}">
+        <input class="main_input" type="{{type}}" 
+        placeholder="{{placeholder}}" value="{{value}}" name="{{name}}">
         <div class="input__error">{{#if error}}{{error}}{{/if}}</div>
       </div>
     `;

@@ -1,19 +1,24 @@
 import { ROUTE_PAGES } from '../../configRouting';
 import Block from '../../Core/Block/Block';
-import { FindOneSymbol, ValidationLogin } from '../../Utils/Validation/ValidationLogin';
+import {
+  FindOneSymbol,
+  ValidationLogin,
+  ValidationPassword,
+  validPasswordReg,
+} from '../../Utils/Validation/Validation';
 import './style.scss';
 
 // eslint-disable-next-line import/prefer-default-export
 export class LoginPage extends Block {
   protected getStateFromProps() {
     this.state = {
-      values: {
-        login: '',
-        password: '',
+      login: {
+        values: '',
+        errors: '',
       },
-      errors: {
-        login: '',
-        password: '',
+      password: {
+        values: '',
+        errors: '',
       },
 
       _sendLoginData: () => {
@@ -23,34 +28,73 @@ export class LoginPage extends Block {
 
         };
 
-        const errorState = {
-          errors: {
-            login: '',
-            password: '',
+        const nextState = {
+          login: {
+            values: '',
+            errors: '',
+          },
+          password: {
+            values: '',
+            errors: '',
           },
           values: { ...loginData },
         };
 
         if (!loginData.login) {
-          errorState.errors.login = ValidationLogin.REQUIRED_TEXT;
-        } else if (loginData.login.length < 4) {
-          errorState.errors.login = ValidationLogin.MIN_LENGTH;
-        } else if (!FindOneSymbol.test(loginData.login)) {
-          errorState.errors.login = ValidationLogin.CHECK_ONE_SYMBOL;
+          nextState.login.errors = ValidationLogin.REQUIRED_TEXT;
         }
         if (!loginData.password) {
-          errorState.errors.password = ValidationLogin.CHECK_PASSWORD;
+          nextState.password.errors = ValidationLogin.REQUIRED_TEXT;
         }
 
-        this.setState(errorState);
+        this.setState(nextState);
 
         console.log('login-state', loginData);
       },
+
+      validateBlurPassword: (e: Event) => {
+        const { target } = e;
+        const { value } = target as HTMLInputElement;
+        const nextState = {
+          password: {
+            values: value,
+            errors: '',
+          },
+        };
+        if (!value) {
+          nextState.password.errors = ValidationPassword.REQUIRED_TEXT;
+        } else if (value.length < 8) {
+          nextState.password.errors = ValidationPassword.MAX_LENGTH;
+        } else if (!validPasswordReg.test(value)) {
+          nextState.password.errors = ValidationPassword.INFO;
+        }
+        this.setState(nextState);
+      },
+      validateBlurLogin: (e: Event) => {
+        const { target } = e;
+        const { value } = target as HTMLInputElement;
+        const nextState = {
+          login: {
+            values: value,
+            errors: '',
+          },
+        };
+        if (!value) {
+          nextState.login.errors = ValidationLogin.REQUIRED_TEXT;
+        } else if (value.length < 4) {
+          nextState.login.errors = ValidationLogin.MIN_LENGTH;
+        } else if (!FindOneSymbol.test(value)) {
+          nextState.login.errors = ValidationLogin.CHECK_ONE_SYMBOL;
+        }
+        this.setState(nextState);
+      },
+
     };
   }
 
   render() {
-    const { errors, values } = this.state;
+    const { login, password } = this.state;
+
     return `
     <div class="auth__block">
       <div class="authorizatons">
@@ -59,21 +103,24 @@ export class LoginPage extends Block {
         <form class="auth__block__form">
 
           {{{Input
-            value="${values.login}"
-            error="${errors.login}"
+            value="${login.values}"
+            error="${login.errors}"
             ref="login"
             id="login"
             type="text"
+            name="login"
             placeholder="Логин"
-          }}}
+            onBlur=validateBlurLogin
+            }}}
 
           {{{Input
-            value="${values.password}"
-            error="${errors.password}"
+            value="${password.values}"
+            error="${password.errors}"
             ref="password"
             id="password" 
             type="password"
             placeholder="Пароль"
+            onBlur=validateBlurPassword
           }}}
 
           {{{Button

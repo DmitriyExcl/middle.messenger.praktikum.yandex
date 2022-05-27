@@ -183,8 +183,6 @@ export default class Block<P = any> {
     if (!events) {
       return;
     }
-    console.log(events);
-    console.log(this._element);
 
     Object.entries(events).forEach(([event, listener]) => {
             this._element!.addEventListener(event, listener);
