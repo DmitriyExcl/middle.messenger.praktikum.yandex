@@ -1,0 +1,29 @@
+@import '../../globalStyle/colors.scss';
+
+.auth__block {
+    display        : flex;
+    justify-content: center;
+    text-align     : center;
+
+    &__form {
+        display       : flex;
+        flex-direction: column;
+        align-items   : center;
+    }
+}
+
+.authorizatons {
+    background   : $color-lite-green;
+    border-radius: 49px;
+    width        : 698px;
+
+    &__header {
+        font-family: 'Karla';
+        font-style : normal;
+        font-weight: 700;
+        font-size  : 55px;
+        line-height: 72px;
+        text-align : center;
+        color      : $color-black;
+    }
+}
