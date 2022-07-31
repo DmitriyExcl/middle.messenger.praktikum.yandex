@@ -1,6 +1,6 @@
 // import { renderDOM, registerComponent, Store, BrowserRouter } from 'core';
 import { initApp } from './services/initApp';
-import { diffObjectsDeep, getScreenComponent } from './utils';
+import { diffObjectsDeep, getScreenComponent } from './Utils';
 import { defaultState } from './store';
 import registerComponent from './Core/RegisteredComponent';
 import { Store } from './Core/Store';
