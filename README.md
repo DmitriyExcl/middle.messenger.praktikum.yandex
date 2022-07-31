@@ -12,6 +12,8 @@ yarn lint
 
 ссылка на пр https://github.com/DmitriyExcl/middle.messenger.praktikum.yandex/pull/2
 
+ссылка на пр 3 спринт https://github.com/DmitriyExcl/middle.messenger.praktikum.yandex/pull/3
+
 
 
 Ссылка на дизайн - 
