@@ -1,5 +1,7 @@
 import { ROUTE_PAGES } from '../../configRouting';
 import Block from '../../Core/Block/Block';
+import { login } from '../../services/auth';
+import { withRouter, withStore } from '../../Utils';
 import {
   FindOneSymbol, REQUIRED_TEXT, ValidationEmail, validationEmailReg, ValidationLogin, ValidationPassword, ValidationPhone, validationPhoneReg, validPasswordReg,
 } from '../../Utils/Validation/Validation';
@@ -8,6 +10,8 @@ import './style.scss';
 // eslint-disable-next-line import/prefer-default-export
 export class RegistrationPage extends Block {
   protected getStateFromProps() {
+    let hasError = false;
+
     this.state = {
       first_name: {
         values: '',
@@ -45,9 +49,12 @@ export class RegistrationPage extends Block {
         };
         if (!value) {
           nextState.password.errors = ValidationPassword.REQUIRED_TEXT;
+          hasError = true;
         } else if (value.length < 8) {
+          hasError = true;
           nextState.password.errors = ValidationPassword.MAX_LENGTH;
         } else if (!validPasswordReg.test(value)) {
+          hasError = true;
           nextState.password.errors = ValidationPassword.INFO;
         }
         this.setState(nextState);
@@ -63,10 +70,13 @@ export class RegistrationPage extends Block {
           },
         };
         if (!value) {
+          hasError = true;
           nextState.login.errors = ValidationLogin.REQUIRED_TEXT;
         } else if (value.length < 4) {
+          hasError = true;
           nextState.login.errors = ValidationLogin.MIN_LENGTH;
         } else if (!FindOneSymbol.test(value)) {
+          hasError = true;
           nextState.login.errors = ValidationLogin.CHECK_ONE_SYMBOL;
         }
         this.setState(nextState);
@@ -82,6 +92,7 @@ export class RegistrationPage extends Block {
           },
         };
         if (!value) {
+          hasError = true;
           nextState.first_name.errors = REQUIRED_TEXT;
         }
         this.setState(nextState);
@@ -97,6 +108,7 @@ export class RegistrationPage extends Block {
           },
         };
         if (!value) {
+          hasError = true;
           nextState.second_name.errors = REQUIRED_TEXT;
         }
         this.setState(nextState);
@@ -112,8 +124,10 @@ export class RegistrationPage extends Block {
           },
         };
         if (!value) {
+          hasError = true;
           nextState.email.errors = REQUIRED_TEXT;
         } else if (!validationEmailReg.test(value)) {
+          hasError = true;
           nextState.email.errors = ValidationEmail.CHECK_VALUE;
         }
         this.setState(nextState);
@@ -129,8 +143,10 @@ export class RegistrationPage extends Block {
           },
         };
         if (!value) {
+          hasError = true;
           nextState.phone.errors = REQUIRED_TEXT;
         } else if (!validationPhoneReg.test(value)) {
+          hasError = true;
           nextState.phone.errors = ValidationPhone.CHECK_VALUE;
         }
         this.setState(nextState);
@@ -192,6 +208,10 @@ export class RegistrationPage extends Block {
           nextState.phone.errors = ValidationLogin.REQUIRED_TEXT;
         }
         this.setState(nextState);
+        if (!hasError) {
+          this.props.store.dispatch(login, registrationData);
+          this.props.router.go(ROUTE_PAGES.CHAT);
+        }
 
         console.log('registration-state', registrationData);
       },
@@ -270,7 +290,6 @@ export class RegistrationPage extends Block {
           }}}
 
           {{{Button
-            to="${ROUTE_PAGES.CHAT}"
             text="Регистрация"
             onClick=_sendRegistrationData
           }}}
@@ -280,3 +299,5 @@ export class RegistrationPage extends Block {
     `;
   }
 }
+
+export default withRouter(withStore(RegistrationPage));

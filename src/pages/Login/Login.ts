@@ -1,5 +1,9 @@
 import { ROUTE_PAGES } from '../../configRouting';
 import Block from '../../Core/Block/Block';
+import { BrowserRouter } from '../../Core/BrowserRouter';
+import { Store } from '../../Core/Store';
+import { login } from '../../services/auth';
+import { withRouter, withStore } from '../../Utils';
 import {
   FindOneSymbol,
   ValidationLogin,
@@ -8,8 +12,28 @@ import {
 } from '../../Utils/Validation/Validation';
 import './style.scss';
 
+type LoginPageProps = {
+  router: BrowserRouter;
+  store: Store<AppState>;
+  formError?: () => string | null;
+};
+
 // eslint-disable-next-line import/prefer-default-export
 export class LoginPage extends Block {
+  constructor(props: LoginPageProps) {
+    super(props);
+
+    this.setProps({
+      formError: () => this.props.store.getState().loginFormError,
+    });
+  }
+
+  componentDidMount() {
+    if (this.props.store.getState().user) {
+      this.props.router.go(ROUTE_PAGES.CHAT);
+    }
+  }
+
   protected getStateFromProps() {
     this.state = {
       login: {
@@ -20,8 +44,11 @@ export class LoginPage extends Block {
         values: '',
         errors: '',
       },
-
+      _goRegistr: () => {
+        this.props.router.go(ROUTE_PAGES.REGISTRATION);
+      },
       _sendLoginData: () => {
+        let hasError = false;
         const loginData = {
           login: (this.refs.login.children[0] as HTMLInputElement).value,
           password: (this.refs.password.children[0] as HTMLInputElement).value,
@@ -41,18 +68,24 @@ export class LoginPage extends Block {
         };
 
         if (!loginData.login) {
+          hasError = true;
           nextState.login.errors = ValidationLogin.REQUIRED_TEXT;
         }
         if (!loginData.password) {
+          hasError = true;
           nextState.password.errors = ValidationLogin.REQUIRED_TEXT;
         }
 
         this.setState(nextState);
-
+        if (!hasError) {
+          this.props.store.dispatch(login, loginData);
+          this.props.router.go(ROUTE_PAGES.CHAT);
+        }
         console.log('login-state', loginData);
       },
 
       validateBlurPassword: (e: Event) => {
+        let hasError = false;
         const { target } = e;
         const { value } = target as HTMLInputElement;
         const nextState = {
@@ -62,8 +95,10 @@ export class LoginPage extends Block {
           },
         };
         if (!value) {
+          hasError = true;
           nextState.password.errors = ValidationPassword.REQUIRED_TEXT;
         } else if (value.length < 8) {
+          hasError = true;
           nextState.password.errors = ValidationPassword.MAX_LENGTH;
         } else if (!validPasswordReg.test(value)) {
           nextState.password.errors = ValidationPassword.INFO;
@@ -71,6 +106,7 @@ export class LoginPage extends Block {
         this.setState(nextState);
       },
       validateBlurLogin: (e: Event) => {
+        let hasError = false;
         const { target } = e;
         const { value } = target as HTMLInputElement;
         const nextState = {
@@ -80,15 +116,17 @@ export class LoginPage extends Block {
           },
         };
         if (!value) {
+          hasError = true;
           nextState.login.errors = ValidationLogin.REQUIRED_TEXT;
         } else if (value.length < 4) {
+          hasError = true;
           nextState.login.errors = ValidationLogin.MIN_LENGTH;
         } else if (!FindOneSymbol.test(value)) {
+          hasError = true;
           nextState.login.errors = ValidationLogin.CHECK_ONE_SYMBOL;
         }
         this.setState(nextState);
       },
-
     };
   }
 
@@ -124,13 +162,12 @@ export class LoginPage extends Block {
           }}}
 
           {{{Button
-            to="${ROUTE_PAGES.CHAT}"
             text="Войти"
             onClick=_sendLoginData
           }}}
           {{{Button
-            to="${ROUTE_PAGES.REGISTRATION}"
             text="Регистрация"
+            onClick=_goRegistr
           }}}
         </form>
       </div>
@@ -138,3 +175,5 @@ export class LoginPage extends Block {
     `;
   }
 }
+
+export default withRouter(withStore(LoginPage));

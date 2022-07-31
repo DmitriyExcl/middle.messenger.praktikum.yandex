@@ -1,4 +1,5 @@
 import Block from '../../Core/Block/Block';
+import { withRouter, withStore } from '../../Utils';
 
 export class EditData extends Block {
   protected getStateFromProps() {
@@ -93,3 +94,5 @@ export class EditData extends Block {
     `;
   }
 }
+
+export default withRouter(withStore(EditData));

@@ -1,5 +1,5 @@
 export const ROUTE_PAGES = {
-  LOGIN: '/',
+  LOGIN: '/login',
   REGISTRATION: '/registration',
   CHAT: '/chat',
   PROFILE: '/profile',

@@ -1,5 +1,6 @@
 import { ROUTE_PAGES } from '../../configRouting';
 import Block from '../../Core/Block/Block';
+import { withRouter, withStore } from '../../Utils';
 
 export class ChatPage extends Block {
   protected getStateFromProps() {
@@ -97,3 +98,5 @@ export class ChatPage extends Block {
         `;
   }
 }
+
+export default withRouter(withStore(ChatPage));

@@ -1,5 +1,6 @@
 import { ROUTE_PAGES } from '../../configRouting';
 import Block from '../../Core/Block/Block';
+import { withRouter, withStore } from '../../Utils';
 
 export class EditPasswordPage extends Block {
   protected getStateFromProps() {
@@ -66,3 +67,5 @@ export class EditPasswordPage extends Block {
     `;
   }
 }
+
+export default withRouter(withStore(EditPasswordPage));
