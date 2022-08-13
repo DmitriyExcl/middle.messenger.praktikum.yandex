@@ -1,0 +1,27 @@
+@import '../../../globalStyle/colors.scss';
+
+.modal {
+  z-index: 10;
+  width: 360px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+
+  &__message {
+    color: $color-black;
+    margin-bottom: 25px;
+  }
+
+  &__target {
+    color: $color-secondary;
+    word-break: break-word;
+  }
+
+  &__buttons {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+  }
+}

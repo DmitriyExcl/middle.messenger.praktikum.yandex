@@ -1,79 +1,48 @@
-// import { renderDOM, registerComponent, Store, BrowserRouter } from 'core';
-import { initApp } from './services/initApp';
-import { diffObjectsDeep, getScreenComponent } from './Utils';
-import { defaultState } from './store';
-import registerComponent from './Core/RegisteredComponent';
-import { Store } from './Core/Store';
-import { BrowserRouter } from './Core/BrowserRouter';
-import renderDOM from './Core/RenderDOM';
-import { RegistrationPage } from './pages/registrations/Registratinon';
-import Login from './pages/Login/Login';
+import { render } from './app/utils/renderDOM';
+import { Main } from './app/layout/main';
+import { router } from './app/services/router/router';
+import store from './app/store/store';
+import { Signin } from './app/pages/auth/signin';
+import { Signup } from './app/pages/auth/signup';
+import { ChatPage } from './app/pages/chat-page';
+import { Profile } from './app/pages/profile';
+import { ServerError } from './app/pages/server-error';
+import { ClientError } from './app/pages/client-error';
+import { authService } from './app/services/auth/auth.service';
 import { ROUTE_PAGES } from './configRouting';
-import userProfile from './pages/userProfile';
-import * as components from './components';
-import Chat from './pages/chat/Chat';
-import EditData from './pages/editData/EditData';
-import editPassword from './pages/editPassword';
 
-Object.values(components).forEach((Component: any) => {
-  registerComponent(Component);
-});
-
-declare global {
-  interface Window {
-    store: Store<AppState>;
-    router: BrowserRouter;
-  }
+async function hasAuthentication() {
+  if (store.getState()?.user) return true;
+  return authService.getUserData()
+    .then(() => true)
+    .catch((e) => {
+      console.log(e.reason || e.error);
+      return false;
+    });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-  const store = new Store<AppState>(defaultState);
-  const router = new BrowserRouter();
+async function hasLogout() {
+  if (store.getState()?.user) return false;
+  return authService.getUserData()
+    .then(() => false)
+    .catch((e) => {
+      console.log(e.reason || e.error);
+      return true;
+    });
+}
 
-  /**
-   * Помещаем роутер и стор в глобальную область для доступа в хоках with*
-   * @warning Не использовать такой способ на реальный проектах
-   */
-  window.router = router;
-  window.store = store;
+router
+  .use(ROUTE_PAGES.SIGN_IN, Signin, hasLogout, ROUTE_PAGES.CHAT)
+  .use(ROUTE_PAGES.SIGN_UP, Signup, hasLogout, ROUTE_PAGES.CHAT)
+  .use('/messenger/:id', ChatPage, hasAuthentication, ROUTE_PAGES.SIGN_IN)
+  .use(ROUTE_PAGES.PROFILE, Profile, hasAuthentication, ROUTE_PAGES.SIGN_IN)
+  .use(ROUTE_PAGES.SERVER_ERROR, ServerError)
+  .use('**', ClientError);
 
-  /**
-   * Глобальный слушатель изменений в сторе
-   * для переключения активного экрана
-   */
-  store.on('changed', (prevState, nextState) => {
-    console.log(prevState);
-    if (process.env.DEBUG) {
-      console.log(
-        '%cstore updated',
-        'background: #222; color: #bada55',
-        nextState,
-      );
-      console.log(JSON.stringify(diffObjectsDeep.map(prevState, nextState)));
-    }
-    router.go(window.location.pathname);
-    if (prevState.screen !== nextState.screen) {
-      const Page = getScreenComponent(nextState.screen);
-      renderDOM(new Page({}));
-    }
-  });
+if (document.location.pathname === '/') {
+  router.go(ROUTE_PAGES.SIGN_IN);
+}
 
-  /**
-   * Инициализируем роутинг
-   */
-  router
-    .use(ROUTE_PAGES.LOGIN, Login, {})
-    .use(ROUTE_PAGES.REGISTRATION, RegistrationPage, {})
-    .use(ROUTE_PAGES.PROFILE, userProfile, {})
-    .use(ROUTE_PAGES.CHAT, Chat, {})
-    .use(ROUTE_PAGES.EDIT_DATA, EditData, {})
-    .use(ROUTE_PAGES.EDIT_PASSWORD, editPassword, {})
-    .start();
+router.start();
 
-  /**
-   * Загружаем данные для приложения
-   */
-  setTimeout(() => {
-    store.dispatch(initApp);
-  }, 100);
-});
+render('#app', new Main({}));

@@ -1,0 +1,34 @@
+.add-users-modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 530px;
+  padding: 32px 0 0 0;
+
+  &__header {
+    text-align: center;
+    color: var(--color-text-secondary);
+    font-size: 24px;
+    margin-bottom: 20px;
+  }
+
+  &__search-users {
+    width: 307px;
+    margin: 0 16px 10px 16px;
+  }
+}
+
+@media (max-width: 500px) {
+  .add-users-modal {
+    width: 100%;
+    height: 100%;
+    border-radius: 0;
+    background: var(--color-background-app);
+    box-sizing: border-box;
+
+    &__search-users {
+      width: 90%;
+      margin: 20px;
+    }
+  }
+}
