@@ -18,7 +18,7 @@ export default class HTTPTransport {
   private readonly baseUrl: string;
   private readonly withCookie: boolean;
 
-  constructor(baseUrl: string = '', withCookie = true) {
+  constructor(baseUrl = '', withCookie = true) {
     this.baseUrl = baseUrl;
     this.withCookie = withCookie;
   }
@@ -82,6 +82,7 @@ export default class HTTPTransport {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 function queryStringify(data?: {}): string {
   if (!data) return '';
   return Object.entries(data).map(([key, value]) => `${key}=${value}`)

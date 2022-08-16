@@ -3,8 +3,9 @@ import { snackbarTmpl } from './snackbar.tmpl';
 import { IPropsSnackbar } from './snackbar.types';
 import { render } from '../../utils/renderDOM';
 
+// eslint-disable-next-line @typescript-eslint/ban-types
 class Snackbar extends View<IPropsSnackbar, {}> {
-  isOpen: boolean;
+  isOpen!: boolean;
 
   constructor(props: IPropsSnackbar) {
     super('div', props);

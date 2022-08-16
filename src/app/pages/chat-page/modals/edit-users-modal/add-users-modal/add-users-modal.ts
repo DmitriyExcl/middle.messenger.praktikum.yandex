@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { addUsersModalTmpl } from './add-users-modal.tmpl';
 import View from '../../../../../services/view/view';
 import { IChildrenAddUsersModal } from './add-users-modal.types';

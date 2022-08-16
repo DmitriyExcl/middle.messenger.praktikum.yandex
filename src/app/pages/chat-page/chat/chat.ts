@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { chatTmpl } from './chat.tmpl';
 import View from '../../../services/view/view';
 import { Dialogues, IDialog, IMessage } from './dialogues';
@@ -10,8 +12,8 @@ import isEqual from '../../../utils/isEqual';
 
 class Chat extends View<IChatProps, IChatChildren> {
   dialogues: IDialog[] = this.props.dialogues || [];
-  newUserName: string = '';
-  message: string;
+  newUserName = '';
+  message!: string;
 
   constructor(props: IChatProps) {
     super('div', { ...props, disabled: true });

@@ -31,6 +31,7 @@ function cloneArray(arg: Array<any>): typeof arg {
 function cloneObject(arg: IObject): typeof arg {
   const cloneArg: IObject = {};
   for (const key in arg) {
+    // eslint-disable-next-line no-prototype-builtins
     if (arg.hasOwnProperty(key)) {
       if (Array.isArray(arg[key])) {
         cloneArg[key] = cloneArray(arg[key]);

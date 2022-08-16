@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   EChangeDataFormFields,
   EChangeDataModalChildren,
@@ -20,7 +22,7 @@ import { usersService } from '../../../services/users/users.service';
 import { ValidationAuth } from '../../../services/constants';
 
 export class ChangeDataModal extends View<IPropsChangeDataModal, IChildrenChangeDataModal> {
-  inputs: Input[];
+  inputs!: Input[];
   changeDataFormValue: IChangeDataFormValue = {
     [EChangeDataFormFields.Login]: '',
     [EChangeDataFormFields.Email]: '',

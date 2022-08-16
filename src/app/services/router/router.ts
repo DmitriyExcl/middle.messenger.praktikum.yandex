@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import Route from './route';
 
 class Router {
@@ -22,7 +23,7 @@ class Router {
     Router.__instance = this;
   }
 
-  public use(path: string, component: Function, canActivate = () => Promise.resolve(true), redirectTo: string = '/') {
+  public use(path: string, component: Function, canActivate = () => Promise.resolve(true), redirectTo = '/') {
     if (path.includes('/:')) {
       path = path.split('/')
         .filter((_item, index) => index !== path.split('/').length - 1)

@@ -1,3 +1,6 @@
+/* eslint-disable no-prototype-builtins */
+export type Indexed = { [key: string]: any };
+
 export function mergeDeep(lhs: Indexed, rhs: Indexed): Indexed {
   for (const p in rhs) {
     if (!rhs.hasOwnProperty(p)) {

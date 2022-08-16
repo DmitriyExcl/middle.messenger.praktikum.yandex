@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { signUpTmpl } from './signup.tmpl';
 import { Input } from '../../../components/input';
 import { Button } from '../../../components/button';
@@ -24,7 +25,7 @@ import { ROUTE_PAGES } from '../../../../configRouting';
 import { ValidationAuth } from '../../../services/constants';
 
 export class Signup extends View<{}, IChildrenSignup> {
-  inputs: Input[];
+  inputs!: Input[];
   signupFormValue: ISignupFormValue = {
     [ESignupFormFields.Login]: '',
     [ESignupFormFields.Email]: '',

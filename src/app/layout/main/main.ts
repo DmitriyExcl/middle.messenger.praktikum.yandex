@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { mainTmpl } from './main.tmpl';
 import View from '../../services/view/view';
 import { chatsService } from '../../services/chats/chats.service';

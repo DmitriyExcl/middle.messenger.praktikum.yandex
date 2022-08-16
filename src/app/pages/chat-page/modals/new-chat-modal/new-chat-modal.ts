@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
+/* eslint-disable @typescript-eslint/ban-types */
 import View from '../../../../services/view/view';
 import { Button } from '../../../../components/button';
 import { IChildrenNewChatModal } from './new-chat-modal.types';

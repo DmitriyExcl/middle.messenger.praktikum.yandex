@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import View from '../../services/view/view';
 import { loaderTmpl } from './loader.tmpl';
 import { render } from '../../utils/renderDOM';

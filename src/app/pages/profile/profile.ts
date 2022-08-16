@@ -16,7 +16,8 @@ import { loader } from '../../components/loader';
 import { ROUTE_PAGES } from '../../../configRouting';
 
 export class Profile extends View<IPropsProfile, IChildrenProfile> {
-  avatar: File | null;
+  avatar!: File | null;
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   userData: IUserData = store.getState().user!;
 
   constructor(props: IPropsProfile) {

@@ -14,8 +14,8 @@ import isEqual from '../../../utils/isEqual';
 import { router } from '../../../services/router/router';
 
 class ChatList extends View<IChatListProps, IChatListChildren> {
-  chatCards: IChatCard[];
-  searchValue: string = '';
+  chatCards?: IChatCard[];
+  searchValue = '';
 
   constructor(props: IChatListProps) {
     super('div', props);

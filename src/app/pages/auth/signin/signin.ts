@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { signinTmpl } from './signin.tmpl';
 import { Button } from '../../../components/button';
 import View from '../../../services/view/view';

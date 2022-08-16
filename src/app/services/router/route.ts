@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import View from '../view/view';
 import isEqual from '../../utils/isEqual';
 import { render } from '../../utils/renderDOM';
