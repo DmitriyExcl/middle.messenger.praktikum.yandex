@@ -16,6 +16,10 @@ yarn lint || lint-and-fix
 
 Ссылка на дизайн -
 ![Дизайн](<https://www.figma.com/file/eJP7qMPoWMiwXN8XkvOndK/Sign-Up-Form-(Community)?node-id=3%3A2>)
+ссылка на пр 3 спринт https://github.com/DmitriyExcl/middle.messenger.praktikum.yandex/pull/3
+
+
+
 
 Ссылка на Netlify -
 ![Деплой](https://deploy-preview-3--modest-sammet-0d3420.netlify.app)
