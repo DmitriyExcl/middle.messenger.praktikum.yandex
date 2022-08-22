@@ -3,7 +3,7 @@ export const REG_EXP_VALIDATE_LOGIN = /^\b[A-Za-z]+[\w\-]{2,19}\b$/;
 export const REG_EXP_VALIDATE_PASSWORD = /^(?=.*[A-ZА-Я])(?=.*\d).{8,40}$/;
 export const REG_EXP_VALIDATE_NAME = /^[A-ZА-Я][a-zа-я-]*$/;
 // eslint-disable-next-line no-useless-escape
-export const REG_EXP_VALIDATE_EMAIL = /^[\w\.-]+@[A-Za-z]+\.[A-Za-z]+$/;
+export const REG_EXP_VALIDATE_EMAIL =  /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 export const REG_EXP_VALIDATE_PHONE = /^\+?[0-9]{10,15}$/;
 
 export const REQUIRED_TEXT = 'Поле обязательно для заполнения';
