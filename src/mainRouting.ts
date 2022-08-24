@@ -1,44 +1,48 @@
-import renderDOM from './Core/RenderPage';
-import registerComponent from './Core/RegisteredComponent';
-
-import { LoginPage } from './pages/Login/Login';
-import { ChatPage } from './pages/chat/Chat';
-import { RegistrationPage } from './pages/registrations/Registratinon';
-import { EditPasswordPage } from './pages/editPassword/EditPassword';
-import { UserProfilePage } from './pages/userProfile/UserProfile';
-import { EditData } from './pages/editData/EditData';
-
+import { render } from './app/utils/renderDOM';
+import { Main } from './app/layout/main';
+import { router } from './app/services/router/router';
+import store from './app/store/store';
+import { Signin } from './app/pages/auth/signin';
+import { Signup } from './app/pages/auth/signup';
+import { ChatPage } from './app/pages/chat-page';
+import { Profile } from './app/pages/profile';
+import { ServerError } from './app/pages/server-error';
+import { ClientError } from './app/pages/client-error';
+import { authService } from './app/services/auth/auth.service';
 import { ROUTE_PAGES } from './configRouting';
 
-import { Button } from './Components/Buttons/ButtonLink';
-import { Input } from './Components/Input/Input';
-import { Link } from './Components/Link/Link';
+async function hasAuthentication() {
+  if (store.getState()?.user) return true;
+  return authService.getUserData()
+    .then(() => true)
+    .catch((e) => {
+      console.log(e.reason || e.error);
+      return false;
+    });
+}
 
-registerComponent(Button);
-registerComponent(Input);
-registerComponent(Link);
+async function hasLogout() {
+  if (store.getState()?.user) return false;
+  return authService.getUserData()
+    .then(() => false)
+    .catch((e) => {
+      console.log(e.reason || e.error);
+      return true;
+    });
+}
 
-document.addEventListener('DOMContentLoaded', () => {
-  switch (document.location.pathname) {
-    case ROUTE_PAGES.LOGIN:
-      renderDOM(LoginPage);
-      break;
-    case ROUTE_PAGES.REGISTRATION:
-      renderDOM(RegistrationPage);
-      break;
-    case ROUTE_PAGES.CHAT:
-      renderDOM(ChatPage);
-      break;
-    case ROUTE_PAGES.EDIT_DATA:
-      renderDOM(EditData);
-      break;
-    case ROUTE_PAGES.PROFILE:
-      renderDOM(UserProfilePage);
-      break;
-    case ROUTE_PAGES.EDIT_PASSWORD:
-      renderDOM(EditPasswordPage);
-      break;
-    default:
-      '';
-  }
-});
+router
+  .use(ROUTE_PAGES.SIGN_IN, Signin, hasLogout, ROUTE_PAGES.CHAT)
+  .use(ROUTE_PAGES.SIGN_UP, Signup, hasLogout, ROUTE_PAGES.CHAT)
+  .use('/messenger/:id', ChatPage, hasAuthentication, ROUTE_PAGES.SIGN_IN)
+  .use(ROUTE_PAGES.PROFILE, Profile, hasAuthentication, ROUTE_PAGES.SIGN_IN)
+  .use(ROUTE_PAGES.SERVER_ERROR, ServerError)
+  .use('**', ClientError);
+
+if (document.location.pathname === '/') {
+  router.go(ROUTE_PAGES.SIGN_IN);
+}
+
+router.start();
+
+render('#app', new Main({}));

@@ -1,8 +1,7 @@
 export const ROUTE_PAGES = {
-  LOGIN: '/',
-  REGISTRATION: '/registration',
-  CHAT: '/chat',
+  SIGN_IN: '/sign-in',
+  SIGN_UP: '/sign-up',
+  CHAT: '/messenger',
   PROFILE: '/profile',
-  EDIT_DATA: '/edit-data',
-  EDIT_PASSWORD: '/edit-password',
+  SERVER_ERROR:'/server-error'
 };

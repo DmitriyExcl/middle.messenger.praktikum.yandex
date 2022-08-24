@@ -1,0 +1,40 @@
+.client-error-wrapper {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-sizing: border-box;
+  padding: 32px;
+}
+
+.client-error {
+  width: fit-content;
+  align-self: center;
+  margin: auto;
+  text-align: center;
+
+  &__title {
+    font-size: 72px;
+    margin-bottom: 12px;
+    color: var(--color-text-secondary);
+  }
+
+  &__info {
+    font-size: 24px;
+    margin-bottom: 30px;
+    color: var(--color-text-primary);
+  }
+
+  &__smile {
+    white-space: nowrap;
+  }
+}
+
+@media (max-width: 500px) {
+  .client-error {
+    &__button {
+      width: 100% !important;
+    }
+  }
+}
