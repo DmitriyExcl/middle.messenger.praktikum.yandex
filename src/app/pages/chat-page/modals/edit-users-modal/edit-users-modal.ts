@@ -12,7 +12,7 @@ import { router } from '../../../../services/router/router';
 import { ROUTE_PAGES } from '../../../../../configRouting';
 
 class EditUsersModal extends View<IPropsEditUsersModal, IChildrenEditUsersModal> {
-  deletedUser: string;
+  deletedUser!: string;
 
   constructor(props: IPropsEditUsersModal) {
     super('div', props);

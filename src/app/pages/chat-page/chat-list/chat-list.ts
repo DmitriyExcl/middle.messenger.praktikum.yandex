@@ -22,6 +22,7 @@ class ChatList extends View<IChatListProps, IChatListChildren> {
   }
 
   componentDidMount() {
+// @ts-ignore
     this.children.chatCards = new ChatCards({ chatCards: this.chatCards });
 
     this.openChat();
@@ -29,17 +30,6 @@ class ChatList extends View<IChatListProps, IChatListChildren> {
   }
 
   componentDidUpdate(oldProps: IChatListProps, newProps: IChatListProps): boolean {
-    const isNewMessages = newProps.chatCards?.some((i, idx) => {
-      if (oldProps?.chatCards) {
-        return (i.unread_count !== oldProps?.chatCards[idx]?.unread_count) && (i.unread_count !== 0);
-      }
-      return false;
-    });
-
-    if (isNewMessages) {
-      this.playNewMessageSound();
-    }
-
     this.chatCards = newProps.chatCards;
 
     if (!isEqual(newProps.chatCards, oldProps.chatCards)) {
@@ -106,6 +96,7 @@ class ChatList extends View<IChatListProps, IChatListChildren> {
   }
 
   switchChat(chat: HTMLElement): void {
+// @ts-ignore
     this.chatCards.forEach((item) => {
       if (item.id === +getElementId(chat)!) {
         item.status = 'active';
@@ -124,14 +115,14 @@ class ChatList extends View<IChatListProps, IChatListChildren> {
     (document.getElementById('message') as HTMLInputElement).value = '';
 
     loader.show();
-
+// @ts-ignore
     const currentChat = this.chatCards.find((item) => item.status === 'active');
 
     chatsService.getChatUsers(currentChat!.id)
       ?.then(() => {
         store.set('currentChat', currentChat!.title);
         document.querySelector('.chat-list__available-chats')?.scrollTo(0, scrollChats as number);
-
+// @ts-ignore
         router.go(`/messenger/${this.chatCards.find((item) => item.status === 'active')?.id}`);
 
         const chatId = +last(document.location.pathname.split('/'));

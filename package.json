@@ -17,12 +17,17 @@
   },
   "scripts": {
     "test": "jest",
-    "parcel-start": "parcel src/index.html --no-cache",
-    "build": "parcel build src/index.html --no-cache",
     "prebuild": "engine-version",
-    "start": "node appServer.js",
-    "lint": "eslint . --ext .ts",
-    "lint-and-fix": "eslint . --ext .ts --fix"
+    "start": "webpack-dev-server --mode development --open",
+    "build": "webpack --mode production",
+    "dev": "webpack --mode development",
+    "check-types": "tsc"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm-run-all test lint:all",
+      "pre-push": "npm run other command"
+    }
   },
   "author": "",
   "license": "ISC",
@@ -32,22 +37,42 @@
     "nanoid": "3.3.1",
     "parcel": "^2.3.2",
     "parcel-plugin-handlebars": "^0.4.4",
-    "sass": "^1.49.9",
-    "ts-jest": "^27.1.4"
+    "ts-jest": "^27.1.4",
+    "ts-loader": "^9.2.6",
+    "scss-loader": "0.0.1",
+    "jsdom": "^19.0.0"
   },
   "devDependencies": {
     "@types/jest": "^27.5.2",
     "@anikin/parcel-transformer-handlebars": "^1.0.9",
     "@parcel/transformer-sass": "^2.4.0",
     "@types/node": "17.0.23",
-    "@typescript-eslint/eslint-plugin": "^5.18.0",
-    "@typescript-eslint/parser": "^5.18.0",
+    "@typescript-eslint/eslint-plugin": "^5.10.0",
+    "@typescript-eslint/parser": "^5.10.0",
     "engine-version": "^1.0.2",
-    "eslint": "^8.13.0",
+    "eslint": "^8.7.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
     "node-sass": "^7.0.1",
+    "typescript": "^4.5.5",
     "stylelint": "^14.6.1",
-    "typescript": "4.6.3"
+    "@types/chai": "^4.3.0",
+    "@types/jsdom": "^16.2.14",
+    "@types/mocha": "^9.1.0",
+    "clean-webpack-plugin": "^4.0.0",
+    "copy-webpack-plugin": "^10.2.1",
+    "css-loader": "^6.5.1",
+    "eslint-config-airbnb": "^19.0.4",
+    "html-webpack-plugin": "^5.5.0",
+    "husky": "^7.0.4",
+    "mini-css-extract-plugin": "^2.5.2",
+    "sass": "^1.49.0",
+    "sass-loader": "^12.4.0",
+    "style-loader": "^3.3.1",
+    "stylelint-scss": "^4.0.0",
+    "ts-node": "^10.4.0",
+    "webpack": "^5.66.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.3"
   }
 }

@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 // старое название BLOCK
+// @ts-ignore
 import { v4 as makeUUID } from 'uuid';
 import Handlebars from 'handlebars';
 import { EventBus } from '../event-bus';
@@ -80,8 +81,10 @@ export default class View<TProps, TChildren> {
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof View) {
+// @ts-ignore
         children[key] = value;
       } else {
+// @ts-ignore
         props[key] = value;
       }
     });
@@ -92,6 +95,7 @@ export default class View<TProps, TChildren> {
     const propsAndStubs = { ...props };
 
     Object.entries(this.children).forEach(([key, child]) => {
+// @ts-ignore
       propsAndStubs[key] = `<div data-id="${(child as View<TProps, unknown>).id}"></div>`;
     });
     const fragment = this.createDocumentElement('template') as HTMLTemplateElement;
@@ -147,6 +151,7 @@ export default class View<TProps, TChildren> {
       },
       set: (target: TPropsAndChildren<TProps>, prop: string, value) => {
         const oldValue = { ...target };
+// @ts-ignore
         target[prop] = value;
         this.eventBus.emit(EEventsBusEvents.FLOW_CDU, oldValue, target);
         return true;

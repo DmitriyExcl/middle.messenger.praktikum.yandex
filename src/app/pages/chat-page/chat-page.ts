@@ -26,7 +26,7 @@ import { ROUTE_PAGES } from '../../../configRouting';
 
 class ChatPage extends View<IChatPageProps, IChatPageChildren> {
   newChatName = '';
-  scrollChats: number;
+  scrollChats: number | undefined;
   chatAvatar: File | undefined;
 
   constructor(props: IChatPageProps) {
