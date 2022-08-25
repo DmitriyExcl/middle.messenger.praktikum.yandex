@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 const noop = () => 1;
 
 require.extensions['.css'] = noop;

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import View from '../../services/view/view';
 import { tmpl } from './client-error.tmpl';
 import { router } from '../../services/router/router';

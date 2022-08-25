@@ -6,9 +6,9 @@ import { chatsService } from '../chats/chats.service';
 import { loader } from '../../components/loader';
 
 class WebSocketApi {
-  socket: WebSocket;
+  socket!: WebSocket;
   interval: any;
-  offsetMessages: number;
+  offsetMessages!: number;
 
   open(token: string) {
     if (this.socket) this.close();

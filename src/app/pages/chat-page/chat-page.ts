@@ -1,5 +1,3 @@
-// @ts-ignore
-import { v4 as makeUUID } from 'uuid';
 import { chatPageTmpl } from './chat-page.tmpl';
 import View from '../../services/view/view';
 import { ChatList } from './chat-list';
@@ -26,7 +24,7 @@ import { ROUTE_PAGES } from '../../../configRouting';
 
 class ChatPage extends View<IChatPageProps, IChatPageChildren> {
   newChatName = '';
-  scrollChats: number;
+  scrollChats: number | undefined;
   chatAvatar: File | undefined;
 
   constructor(props: IChatPageProps) {

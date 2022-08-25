@@ -75,13 +75,15 @@ export default class View<TProps, TChildren> {
   }
 
   private getChildren(propsAndChildren: TPropsAndChildren<TProps>) {
-    const children = {} as TChildrenBlock<TChildren>;
+    //подобрать тип
+    const children = {} as TChildrenBlock<TChildren> | any;
     const props = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof View) {
         children[key] = value;
       } else {
+// @ts-ignore
         props[key] = value;
       }
     });
@@ -92,6 +94,7 @@ export default class View<TProps, TChildren> {
     const propsAndStubs = { ...props };
 
     Object.entries(this.children).forEach(([key, child]) => {
+// @ts-ignore
       propsAndStubs[key] = `<div data-id="${(child as View<TProps, unknown>).id}"></div>`;
     });
     const fragment = this.createDocumentElement('template') as HTMLTemplateElement;
@@ -116,7 +119,7 @@ export default class View<TProps, TChildren> {
 
   dispatchComponentDidMount() {
     this.eventBus.emit(EEventsBusEvents.FLOW_CDM);
-    if (Object.keys(this.children).length) {
+    if (Object.keys(this.children).length > 0) {
       this.eventBus.emit(EEventsBusEvents.FLOW_RENDER);
     }
   }
@@ -147,6 +150,7 @@ export default class View<TProps, TChildren> {
       },
       set: (target: TPropsAndChildren<TProps>, prop: string, value) => {
         const oldValue = { ...target };
+// @ts-ignore
         target[prop] = value;
         this.eventBus.emit(EEventsBusEvents.FLOW_CDU, oldValue, target);
         return true;

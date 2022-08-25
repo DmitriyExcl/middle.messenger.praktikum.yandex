@@ -11,8 +11,8 @@ import last from '../../../../../utils/last';
 import store from '../../../../../store/store';
 
 export class AddUsersModal extends View<{ }, IChildrenAddUsersModal> {
-  addedUser: string;
-  foundUsers: IUserData[];
+  addedUser!: string;
+  foundUsers: IUserData[] = [];
 
   constructor(props: { }) {
     super('div', props);
