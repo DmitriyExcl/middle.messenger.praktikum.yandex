@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import { plugDialogTmpl } from './plug-dialog.tmpl';
 import View from '../../../services/view/view';
 import { loader } from '../../../components/loader';

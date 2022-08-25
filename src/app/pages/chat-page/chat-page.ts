@@ -1,5 +1,3 @@
-// @ts-ignore
-import { v4 as makeUUID } from 'uuid';
 import { chatPageTmpl } from './chat-page.tmpl';
 import View from '../../services/view/view';
 import { ChatList } from './chat-list';

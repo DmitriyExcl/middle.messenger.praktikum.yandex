@@ -14,7 +14,7 @@ import isEqual from '../../../utils/isEqual';
 import { router } from '../../../services/router/router';
 
 class ChatList extends View<IChatListProps, IChatListChildren> {
-  chatCards?: IChatCard[];
+  chatCards!: IChatCard[];
   searchValue = '';
 
   constructor(props: IChatListProps) {
@@ -22,7 +22,7 @@ class ChatList extends View<IChatListProps, IChatListChildren> {
   }
 
   componentDidMount() {
-// @ts-ignore
+
     this.children.chatCards = new ChatCards({ chatCards: this.chatCards });
 
     this.openChat();
@@ -96,7 +96,6 @@ class ChatList extends View<IChatListProps, IChatListChildren> {
   }
 
   switchChat(chat: HTMLElement): void {
-// @ts-ignore
     this.chatCards.forEach((item) => {
       if (item.id === +getElementId(chat)!) {
         item.status = 'active';
@@ -115,14 +114,13 @@ class ChatList extends View<IChatListProps, IChatListChildren> {
     (document.getElementById('message') as HTMLInputElement).value = '';
 
     loader.show();
-// @ts-ignore
+
     const currentChat = this.chatCards.find((item) => item.status === 'active');
 
     chatsService.getChatUsers(currentChat!.id)
       ?.then(() => {
         store.set('currentChat', currentChat!.title);
         document.querySelector('.chat-list__available-chats')?.scrollTo(0, scrollChats as number);
-// @ts-ignore
         router.go(`/messenger/${this.chatCards.find((item) => item.status === 'active')?.id}`);
 
         const chatId = +last(document.location.pathname.split('/'));

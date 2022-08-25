@@ -1,6 +1,5 @@
 /* eslint-disable @typescript-eslint/no-empty-function */
 // старое название BLOCK
-// @ts-ignore
 import { v4 as makeUUID } from 'uuid';
 import Handlebars from 'handlebars';
 import { EventBus } from '../event-bus';
@@ -76,12 +75,12 @@ export default class View<TProps, TChildren> {
   }
 
   private getChildren(propsAndChildren: TPropsAndChildren<TProps>) {
-    const children = {} as TChildrenBlock<TChildren>;
+    //подобрать тип
+    const children = {} as TChildrenBlock<TChildren> | any;
     const props = {};
 
     Object.entries(propsAndChildren).forEach(([key, value]) => {
       if (value instanceof View) {
-// @ts-ignore
         children[key] = value;
       } else {
 // @ts-ignore
@@ -120,7 +119,7 @@ export default class View<TProps, TChildren> {
 
   dispatchComponentDidMount() {
     this.eventBus.emit(EEventsBusEvents.FLOW_CDM);
-    if (Object.keys(this.children).length) {
+    if (Object.keys(this.children).length > 0) {
       this.eventBus.emit(EEventsBusEvents.FLOW_RENDER);
     }
   }
